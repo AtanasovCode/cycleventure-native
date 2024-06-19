@@ -1,10 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { useStore } from './useStore';
 
 export default function App() {
+
+  const bears = useStore((state) => state.bears);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Bears: {bears}</Text>
       <StatusBar style="auto" />
     </View>
   );
