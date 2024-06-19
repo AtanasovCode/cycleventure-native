@@ -7,18 +7,9 @@ export default function App() {
   const bears = useStore((state) => state.bears);
 
   return (
-    <View style={styles.container}>
-      <Text>Bears: {bears}</Text>
+    <View className="bg-slate-900 flex-1 items-center justify-center">
+      <Text className="text-slate-100 text-center font-bold text-xl">Bears: {bears}</Text>
       <StatusBar style="auto" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
