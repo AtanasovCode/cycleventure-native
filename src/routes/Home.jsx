@@ -1,11 +1,16 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import { supabase } from "../../supabase";
+import { useStore } from "../../useStore";
 
 const Home = () => {
     return (
-        <View className="bg-slate-900 flex-1 items-center justify-center">
-            <Text className="text-slate-100">Home</Text>
-        </View>
+        <SafeAreaView className="bg-background flex-1 items-center justify-center">
+            <StatusBar style="light" />
+            <Text className="text-text text-center font-bold ">Cycleventure.</Text>
+        </SafeAreaView>
     );
 }
 
