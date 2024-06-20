@@ -1,15 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { useStore } from './useStore';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function App() {
+//importing routes
+import Home from "./src/routes/Home";
 
-  const bears = useStore((state) => state.bears);
+
+const App = () => {
+
+  const Stack = createNativeStackNavigator();
 
   return (
-    <View className="bg-slate-900 flex-1 items-center justify-center">
-      <Text className="text-slate-100 text-center font-bold text-xl">Bears: {bears}</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+export default App;
