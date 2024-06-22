@@ -5,11 +5,14 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
+    FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "../../supabase";
 import { useStore } from "../../useStore";
 import { Entypo } from '@expo/vector-icons';
+
+import ProductPreview from "../components/ProductPreview";
 
 const Products = ({ navigation }) => {
 
@@ -60,13 +63,13 @@ const Products = ({ navigation }) => {
             <Text className="text-text text-center font-extrabold text-2xl mb-8">Products</Text>
             {
                 loading ?
-                <Text className="text-text">Loading...</Text>
-                :
-                products && products.map((item) => {
-                    return (
-                        <Text className="text-text">{item.name}</Text>
-                    );
-                })
+                    <Text className="text-text">Loading...</Text>
+                    :
+                    <FlatList
+                        data={products}
+                        renderItem={({ item }) => <ProductPreview item={item} />}
+                        keyExtractor={(item) => item.id.toString()} // Corrected keyExtractor
+                    />
             }
         </SafeAreaView>
     );
