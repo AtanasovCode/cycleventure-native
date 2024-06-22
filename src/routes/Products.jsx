@@ -53,7 +53,7 @@ const Products = ({ navigation }) => {
 
     return (
         <SafeAreaView className="flex-1 bg-background">
-            <View className="p-6 flex-row items-center justify-center mb-16">
+            <View className="p-6 flex-row items-center justify-center mb-10">
                 <Text className="font-black text-text text-3xl">cycleventure.</Text>
                 <View className="absolute right-6">
                     <Entypo name="shopping-cart" size={27} color="white" />
