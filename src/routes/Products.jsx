@@ -67,7 +67,7 @@ const Products = ({ navigation }) => {
                     :
                     <FlatList
                         data={products}
-                        renderItem={({ item }) => <ProductPreview item={item} />}
+                        renderItem={({ item }) => <ProductPreview item={item} navigation={navigation} />}
                         keyExtractor={(item) => item.id.toString()} // Corrected keyExtractor
                     />
             }
