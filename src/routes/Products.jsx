@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "../../supabase";
 import { useStore } from "../../useStore";
 import { Entypo } from '@expo/vector-icons';
+import Loading from "../components/Loading";
 
 import ProductPreview from "../components/ProductPreview";
 
@@ -63,7 +64,7 @@ const Products = ({ navigation }) => {
             <Text className="text-text text-center font-extrabold text-2xl mb-8">Products</Text>
             {
                 loading ?
-                    <Text className="text-text">Loading...</Text>
+                    <Loading />
                     :
                     <FlatList
                         data={products}
