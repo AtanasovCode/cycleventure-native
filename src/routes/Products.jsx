@@ -8,12 +8,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "../../supabase";
+import { useStore } from "../../useStore";
 import { Entypo } from '@expo/vector-icons';
 
 const Products = ({ navigation }) => {
 
-    const [loading, setLoading] = useState(false);
-    const [products, setProducts] = useState([]);
+    const loading = useStore((state) => state.loading);
+    const setLoading = useStore((state) => state.setLoading);
+    const products = useStore((state) => state.products);
+    const saveProducts = useStore((state) => state.saveProducts);
 
     useEffect(() => {
         getProducts();
@@ -33,7 +36,7 @@ const Products = ({ navigation }) => {
             }
 
             if (data) {
-                setProducts(data);
+                saveProducts(data);
             }
 
         } catch (error) {
