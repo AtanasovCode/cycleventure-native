@@ -9,7 +9,7 @@ import { supabase } from "../../supabase";
 import { useStore } from "../../useStore";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import { getRating, width, height, formatMoney } from "../Utils";
 
 const Product = ({ navigation }) => {
@@ -65,12 +65,12 @@ const Product = ({ navigation }) => {
                     {selectedProduct.description}
                 </Text>
                 <TouchableOpacity
-                    style={{width: width * 0.5}}
-                    className="items-center justify-center bg-accent p-2 mt-8"
+                    style={{ width: width * 0.65 }}
+                    className="items-center justify-center bg-secondary p-2 mt-12 rounded-xl"
                 >
-                    <View className="flex-row items-center justify-center">
-                        <FontAwesome5 name="cart-arrow-down" size={18} color="white" />
-                        <Text className="text-text font-semibold ml-4">Add to cart</Text>
+                    <View className="flex-row items-center justify-center gap-3">
+                        <Entypo name="shopping-cart" size={18} color="white" />
+                        <Text className="text-text font-semibold">Add to cart</Text>
                     </View>
                 </TouchableOpacity>
             </View>

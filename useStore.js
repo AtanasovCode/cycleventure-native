@@ -15,4 +15,9 @@ export const useStore = create((set) => ({
     selectProduct: (id) => set((state) => ({
         selectedProduct: state.products.find((item) => item.id === id),
     })),
+
+    cart: [],
+    addToCart: (product) => set((state) => ({
+        cart: [product, ...state.cart]
+    }))
 }));
