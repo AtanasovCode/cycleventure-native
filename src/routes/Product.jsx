@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { getRating, width, height, formatMoney } from "../Utils";
+import { Ionicons } from '@expo/vector-icons';
 
 const Product = ({ navigation }) => {
 
@@ -20,6 +21,12 @@ const Product = ({ navigation }) => {
 
     return (
         <SafeAreaView className="flex-1 bg-background items-center justify-start">
+            <TouchableOpacity 
+                className="absolute top-[7%] left-[7%]"
+                onPress={() => navigation.goBack()}
+            >
+                <Ionicons name="arrow-back" size={24} color="white" />
+            </TouchableOpacity>
             <Image
                 source={{ uri: selectedProduct.image }}
                 style={{ width: width * 0.8, height: height * 0.4 }}
