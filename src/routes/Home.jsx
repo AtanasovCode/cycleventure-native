@@ -41,7 +41,7 @@ const Home = ({ navigation }) => {
                 >
                     <TouchableOpacity 
                         className="px-16 py-3 rounded-xl bg-primary"
-                        onPress={() => navigation.navigate("Products")}
+                        onPress={() => navigation.navigate("Auth")}
                     >
                         <Text className="text-background font-extrabold">Explore</Text>
                     </TouchableOpacity>
