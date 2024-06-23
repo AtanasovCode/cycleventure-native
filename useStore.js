@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 export const useStore = create((set) => ({
     //Auth
+    session: null,
+    setSession: (session) => set({ session }),
     email: null,
     saveEmail: (email) => set({ email }),
     password: null,
