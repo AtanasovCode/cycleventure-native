@@ -1,13 +1,15 @@
 import { create } from "zustand";
 
 export const useStore = create((set) => ({
-    bears: 23,
-    increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-    removeAllBears: () => set({ bears: 0 }),
-    updateBears: (newBears) => set({ bears: newBears }),
+    //Auth
+    email: null,
+    saveEmail: (email) => set({ email }),
+    password: null,
+    savePassword: (password) => set({ password }),
 
     loading: false,
     setLoading: (value) => set({ loading: value }),
+
     products: [],
     saveProducts: (products) => set({ products }),
 

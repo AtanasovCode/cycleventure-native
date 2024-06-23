@@ -4,6 +4,7 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
+    ScrollView,
 } from "react-native";
 import { supabase } from "../../supabase";
 import { useStore } from "../../useStore";
@@ -20,7 +21,10 @@ const Product = ({ navigation }) => {
     console.log(getRating(selectedProduct.rating));
 
     return (
-        <SafeAreaView className="flex-1 bg-background items-center justify-start">
+        <ScrollView 
+            className="flex-1 bg-background py-6"
+            contentContainerStyle={{alignItems: 'center', justifyContent: 'start'}}
+        >
             <TouchableOpacity 
                 className="absolute top-[7%] left-[7%]"
                 onPress={() => navigation.goBack()}
@@ -81,7 +85,7 @@ const Product = ({ navigation }) => {
                     </View>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </ScrollView>
     );
 }
 
