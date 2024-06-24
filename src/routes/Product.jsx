@@ -13,19 +13,47 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { getRating, width, height, formatMoney } from "../Utils";
 import { Ionicons } from '@expo/vector-icons';
+import Loading from "../components/Loading";
 
 const Product = ({ navigation }) => {
 
+    const session = useStore((state) => state.session);
     const selectedProduct = useStore((state) => state.selectedProduct);
+    const loading = useStore((state) => state.loading);
+    const setLoading = useStore((state) => state.setLoading);
 
-    console.log(getRating(selectedProduct.rating));
+    const addToCart = async () => {
+        try {
+            setLoading(true);
+            if (!session?.user) throw new Error('No user on the session!');
+
+            const cart = {
+                user_id: session?.user.id,
+                product_id: selectedProduct.id,
+                quantity: 1,
+            }
+
+            const { error } = await supabase.from('carts').insert(cart);
+
+            if (error) {
+                throw error;
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                Alert.alert(error.message);
+            }
+        } finally {
+            setLoading(false);
+            console.log("Saved to cart")
+        }
+    }
 
     return (
-        <ScrollView 
+        <ScrollView
             className="flex-1 bg-background py-6"
-            contentContainerStyle={{alignItems: 'center', justifyContent: 'start'}}
+            contentContainerStyle={{ alignItems: 'center', justifyContent: 'start' }}
         >
-            <TouchableOpacity 
+            <TouchableOpacity
                 className="absolute top-[7%] left-[7%]"
                 onPress={() => navigation.goBack()}
             >
@@ -78,6 +106,9 @@ const Product = ({ navigation }) => {
                 <TouchableOpacity
                     style={{ width: width * 0.65 }}
                     className="items-center justify-center bg-secondary p-2 mt-12 rounded-xl"
+                    onPress={() => {
+                        addToCart();
+                    }}
                 >
                     <View className="flex-row items-center justify-center gap-3">
                         <Entypo name="shopping-cart" size={18} color="white" />
@@ -85,6 +116,7 @@ const Product = ({ navigation }) => {
                     </View>
                 </TouchableOpacity>
             </View>
+            {loading && <Loading />}
         </ScrollView>
     );
 }
