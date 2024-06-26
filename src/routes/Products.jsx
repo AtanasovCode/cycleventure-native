@@ -12,6 +12,7 @@ import { supabase } from "../../supabase";
 import { useStore } from "../../useStore";
 import { Entypo } from '@expo/vector-icons';
 import Loading from "../components/Loading";
+import Cart from "../components/Cart";
 
 import ProductPreview from "../components/ProductPreview";
 
@@ -19,6 +20,9 @@ const Products = ({ navigation }) => {
 
     const loading = useStore((state) => state.loading);
     const setLoading = useStore((state) => state.setLoading);
+    const showCart = useStore((state) => state.showCart);
+    const setShowCart = useStore((state) => state.setShowCart);
+
     const products = useStore((state) => state.products);
     const saveProducts = useStore((state) => state.saveProducts);
 
@@ -56,9 +60,12 @@ const Products = ({ navigation }) => {
         <SafeAreaView className="flex-1 bg-background">
             <View className="p-6 flex-row items-center justify-center mb-10">
                 <Text className="font-black text-text text-3xl">cycleventure.</Text>
-                <View className="absolute right-6">
+                <TouchableOpacity 
+                    className="absolute right-6"
+                    onPress={() => setShowCart(true)}
+                >
                     <Entypo name="shopping-cart" size={27} color="white" />
-                </View>
+                </TouchableOpacity>
                 <View className="w-full bg-slate-700 h-1 absolute bottom-0"></View>
             </View>
             <Text className="text-text text-center font-extrabold text-2xl mb-8">Products</Text>
@@ -72,6 +79,7 @@ const Products = ({ navigation }) => {
                         keyExtractor={(item) => item.id.toString()} // Corrected keyExtractor
                     />
             }
+            <Cart />
         </SafeAreaView>
     );
 }

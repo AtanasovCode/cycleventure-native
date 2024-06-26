@@ -11,6 +11,8 @@ export const useStore = create((set) => ({
 
     loading: false,
     setLoading: (value) => set({ loading: value }),
+    showCart: false,
+    setShowCart: (value) => set({ showCart: value }),
 
     products: [],
     saveProducts: (products) => set({ products }),
