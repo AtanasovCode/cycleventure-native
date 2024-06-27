@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
     View,
     Text,
@@ -14,7 +15,6 @@ import { Entypo } from '@expo/vector-icons';
 import { getRating, width, height, formatMoney } from "../Utils";
 import { Ionicons } from '@expo/vector-icons';
 import Loading from "../components/Loading";
-import Cart from "../components/Cart";
 
 const Product = ({ navigation }) => {
 
@@ -22,6 +22,7 @@ const Product = ({ navigation }) => {
     const selectedProduct = useStore((state) => state.selectedProduct);
     const loading = useStore((state) => state.loading);
     const setLoading = useStore((state) => state.setLoading);
+
 
     const addToCart = async () => {
         try {

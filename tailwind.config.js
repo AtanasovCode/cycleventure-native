@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         'text': 'hsl(328, 86%, 95%)',
-        'background': 'hsl(330, 53%, 6%)',
+        'background': '#042222',
         'primary': 'hsl(329, 83%, 72%)',
         'secondary': 'hsl(169, 83%, 30%)',
         'accent': 'hsl(235, 82%, 53%)',

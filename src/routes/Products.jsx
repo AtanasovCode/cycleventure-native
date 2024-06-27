@@ -6,6 +6,7 @@ import {
     Image,
     Dimensions,
     FlatList,
+    Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "../../supabase";
@@ -18,9 +19,13 @@ import ProductPreview from "../components/ProductPreview";
 
 const Products = ({ navigation }) => {
 
+    const session = useStore((state) => state.session)
     const loading = useStore((state) => state.loading);
     const setLoading = useStore((state) => state.setLoading);
-    const showCart = useStore((state) => state.showCart);
+
+    const cart = useStore((state) => state.cart);
+    const setCart = useStore((state) => state.setCart);
+
     const setShowCart = useStore((state) => state.setShowCart);
 
     const products = useStore((state) => state.products);
@@ -29,6 +34,10 @@ const Products = ({ navigation }) => {
     useEffect(() => {
         getProducts();
     }, [])
+
+    useEffect(() => {
+        getCart();
+    }, [products])
 
     async function getProducts() {
         try {
@@ -56,11 +65,44 @@ const Products = ({ navigation }) => {
         }
     }
 
+    async function getCart() {
+        try {
+            setLoading(true);
+
+            const { data, error, status } = await supabase
+                .from('carts')
+                .select('*')
+                .eq("user_id", session?.user.id)
+
+            if (error && status !== 406) {
+                throw error;
+            }
+
+            if (data) {
+                // Find the corresponding products for each cart item
+                const cartItems = data.map(cartItem => {
+                    const product = products.find(item => item.id === cartItem.product_id);
+                    return { ...cartItem, product };
+                });
+                setCart(cartItems);
+                console.log(`CART: ${cartItems}`);
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                Alert.alert(error.message);
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
     return (
         <SafeAreaView className="flex-1 bg-background">
             <View className="p-6 flex-row items-center justify-center mb-10">
                 <Text className="font-black text-text text-3xl">cycleventure.</Text>
-                <TouchableOpacity 
+                <TouchableOpacity
                     className="absolute right-6"
                     onPress={() => setShowCart(true)}
                 >

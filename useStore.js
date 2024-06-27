@@ -23,7 +23,5 @@ export const useStore = create((set) => ({
     })),
 
     cart: [],
-    addToCart: (product) => set((state) => ({
-        cart: [product, ...state.cart]
-    }))
+    setCart: (data) => set({ cart: data }),
 }));
