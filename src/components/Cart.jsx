@@ -8,11 +8,12 @@ import {
     Alert,
     FlatList,
 } from "react-native";
-import { width, height } from "../Utils";
+import { width, height, formatMoney } from "../Utils";
 import { supabase } from '../../supabase';
 import { useStore } from "../../useStore";
 import { Entypo } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import Animated from "react-native-reanimated";
 import Loading from './Loading';
 
@@ -70,18 +71,26 @@ const Cart = () => {
     }
 
     const renderCartItem = ({ item }) => (
-        <View className="flex-row items-center justify-start gap-6 mb-8">
+        <View className="flex-row items-center justify-start gap-3 rounded-xl mb-6 bg-slate-800 p-2">
             <View>
                 <Image
                     source={{ uri: item.product.image }}
-                    className="w-20 h-10"
-                    
+                    className="w-24 h-12"
+
                 />
             </View>
-            <View>
-                <Text className="text-text font-bold">{item.product.name}</Text>
-                <Text className="text-text">${item.product.price}</Text>
-                <Text className="text-text">Quantity: {item.quantity}</Text>
+            <View className="flex-1">
+                <Text className="text-text font-bold text-lg mb-2">{item.product.name}</Text>
+                <Text className="text-text">{formatMoney(item.product.price)}</Text>
+                <View className="flex-row justify-between items-center mt-2 bg-slate-700 p-2 rounded-xl">
+                    <TouchableOpacity>
+                        <AntDesign name="minus" size={16} color="white" />
+                    </TouchableOpacity>
+                    <Text className="text-red-300 mx-4">{item.quantity}</Text>
+                    <TouchableOpacity>
+                        <AntDesign name="plus" size={16} color="white" />
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -98,12 +107,12 @@ const Cart = () => {
                 className="items-end justify-center flex-1"
             >
                 <Animated.View
-                    className="bg-background p-6"
-                    style={[{ width: width * 0.8, height: height }]}
+                    className="bg-background p-2"
+                    style={[{ width: width * 0.85, height: height }]}
                 >
-                    <View className="flex-row items-center justify-center gap-3">
+                    <View className="relative flex-row items-center justify-center gap-4 mt-4">
                         <TouchableOpacity
-                            className="absolute left-2"
+                            className="absolute top-0 left-0 right-0 bottom-0 items-start justify-center"
                             onPress={() => {
                                 setShowCart(false);
                             }}
@@ -111,9 +120,9 @@ const Cart = () => {
                             <EvilIcons name="close" size={32} color="white" />
                         </TouchableOpacity>
                         <Entypo name="shopping-cart" size={27} color="white" />
-                        <Text className="text-text text-center font-bold text-xl">CART</Text>
+                        <Text className="text-text font-bold text-xl">CART</Text>
                     </View>
-                    <View className="mt-16">
+                    <View className="mt-8">
                         {loading ? (
                             <Loading />
                         ) : (
