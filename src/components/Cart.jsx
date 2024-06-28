@@ -4,6 +4,7 @@ import {
     Text,
     Modal,
     TouchableOpacity,
+    Image,
     Alert,
     FlatList,
 } from "react-native";
@@ -69,10 +70,19 @@ const Cart = () => {
     }
 
     const renderCartItem = ({ item }) => (
-        <View className="p-4 border-b border-gray-200">
-            <Text className="text-text font-bold">{item.product.name}</Text>
-            <Text className="text-text">${item.product.price}</Text>
-            <Text className="text-text">Quantity: {item.quantity}</Text>
+        <View className="flex-row items-center justify-start gap-6 mb-8">
+            <View>
+                <Image
+                    source={{ uri: item.product.image }}
+                    className="w-20 h-10"
+                    
+                />
+            </View>
+            <View>
+                <Text className="text-text font-bold">{item.product.name}</Text>
+                <Text className="text-text">${item.product.price}</Text>
+                <Text className="text-text">Quantity: {item.quantity}</Text>
+            </View>
         </View>
     );
 
@@ -84,12 +94,12 @@ const Cart = () => {
             transparent={true}
         >
             <View
-                style={{ backgroundColor: "rgba(0, 0, 0, 0.57)" }}
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
                 className="items-end justify-center flex-1"
             >
                 <Animated.View
                     className="bg-background p-6"
-                    style={[{ width: width * 0.75, height: height }]}
+                    style={[{ width: width * 0.8, height: height }]}
                 >
                     <View className="flex-row items-center justify-center gap-3">
                         <TouchableOpacity
@@ -103,7 +113,7 @@ const Cart = () => {
                         <Entypo name="shopping-cart" size={27} color="white" />
                         <Text className="text-text text-center font-bold text-xl">CART</Text>
                     </View>
-                    <View>
+                    <View className="mt-16">
                         {loading ? (
                             <Loading />
                         ) : (
