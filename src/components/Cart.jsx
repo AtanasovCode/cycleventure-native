@@ -19,56 +19,10 @@ import Loading from './Loading';
 
 const Cart = () => {
 
-    const session = useStore((state) => state.session);
-    const products = useStore((state) => state.products);
     const showCart = useStore((state) => state.showCart);
     const setShowCart = useStore((state) => state.setShowCart);
     const loading = useStore((state) => state.loading);
-    const setLoading = useStore((state) => state.setLoading);
-    const setCart = useStore((state) => state.setCart);
     const cart = useStore((state) => state.cart);
-
-    useEffect(() => {
-        if (products.length > 0) {
-            getCart();
-        }
-    }, [products]);
-
-    useEffect(() => {
-        console.log(`cart: ${JSON.stringify(cart, null, 2)}`);
-    }, [cart]);
-
-    async function getCart() {
-        try {
-            setLoading(true);
-
-            const { data, error, status } = await supabase
-                .from('carts')
-                .select('*')
-                .eq("user_id", session?.user.id);
-
-            if (error && status !== 406) {
-                throw error;
-            }
-
-            if (data) {
-                const cartItems = data.map((cartItem) => {
-                    const product = products.find(item => item.id === cartItem.product_id);
-                    return { ...cartItem, product };
-                });
-                setCart(cartItems);
-
-                console.log('Cart Items:', JSON.stringify(cartItems, null, 2));
-            }
-
-        } catch (error) {
-            if (error instanceof Error) {
-                Alert.alert(error.message);
-            }
-        } finally {
-            setLoading(false);
-        }
-    }
 
     const renderCartItem = ({ item }) => (
         <View className="flex-row items-center justify-start gap-3 rounded-xl mb-6 bg-slate-800 p-2">

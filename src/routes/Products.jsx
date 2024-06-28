@@ -23,10 +23,9 @@ const Products = ({ navigation }) => {
     const loading = useStore((state) => state.loading);
     const setLoading = useStore((state) => state.setLoading);
 
-    const cart = useStore((state) => state.cart);
-    const setCart = useStore((state) => state.setCart);
-
     const setShowCart = useStore((state) => state.setShowCart);
+    const localCart = useStore((state) => state.localCart);
+    const setCart = useStore((state) => state.setCart);
 
     const products = useStore((state) => state.products);
     const saveProducts = useStore((state) => state.saveProducts);
@@ -34,10 +33,6 @@ const Products = ({ navigation }) => {
     useEffect(() => {
         getProducts();
     }, [])
-
-    useEffect(() => {
-        getCart();
-    }, [products])
 
     async function getProducts() {
         try {
@@ -65,6 +60,12 @@ const Products = ({ navigation }) => {
         }
     }
 
+    useEffect(() => {
+        if (products.length > 0) {
+            getCart();
+        }
+    }, [products, localCart]);
+
     async function getCart() {
         try {
             setLoading(true);
@@ -72,20 +73,20 @@ const Products = ({ navigation }) => {
             const { data, error, status } = await supabase
                 .from('carts')
                 .select('*')
-                .eq("user_id", session?.user.id)
+                .eq("user_id", session?.user.id);
 
             if (error && status !== 406) {
                 throw error;
             }
 
             if (data) {
-                // Find the corresponding products for each cart item
-                const cartItems = data.map(cartItem => {
+                const cartItems = data.map((cartItem) => {
                     const product = products.find(item => item.id === cartItem.product_id);
                     return { ...cartItem, product };
                 });
                 setCart(cartItems);
-                console.log(`CART: ${cartItems}`);
+
+                console.log('Cart Items:', JSON.stringify(cartItems, null, 2));
             }
 
         } catch (error) {
@@ -96,7 +97,6 @@ const Products = ({ navigation }) => {
             setLoading(false);
         }
     }
-
 
     return (
         <SafeAreaView className="flex-1 bg-background">

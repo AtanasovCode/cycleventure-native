@@ -19,9 +19,15 @@ import Loading from "../components/Loading";
 const Product = ({ navigation }) => {
 
     const session = useStore((state) => state.session);
+    const products = useStore((state) => state.products);
     const selectedProduct = useStore((state) => state.selectedProduct);
     const loading = useStore((state) => state.loading);
     const setLoading = useStore((state) => state.setLoading);
+    const setLocalCart = useStore((state) => state.setLocalCart);
+    const localCart = useStore((state) => state.localCart);
+    const setCart = useStore((state) => state.setCart);
+    const cart = useStore((state) => state.cart);
+
 
 
     const addToCart = async () => {
@@ -47,6 +53,44 @@ const Product = ({ navigation }) => {
         } finally {
             setLoading(false);
             console.log("Saved to cart")
+        }
+    }
+
+    useEffect(() => {
+        if (products.length > 0) {
+            getCart();
+        }
+    }, [products, localCart]);
+
+    async function getCart() {
+        try {
+            setLoading(true);
+
+            const { data, error, status } = await supabase
+                .from('carts')
+                .select('*')
+                .eq("user_id", session?.user.id);
+
+            if (error && status !== 406) {
+                throw error;
+            }
+
+            if (data) {
+                const cartItems = data.map((cartItem) => {
+                    const product = products.find(item => item.id === cartItem.product_id);
+                    return { ...cartItem, product };
+                });
+                setCart(cartItems);
+
+                console.log('Cart Items:', JSON.stringify(cartItems, null, 2));
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                Alert.alert(error.message);
+            }
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -109,12 +153,18 @@ const Product = ({ navigation }) => {
                     style={{ width: width * 0.65 }}
                     className="items-center justify-center bg-secondary p-2 mt-12 rounded-xl"
                     onPress={() => {
+                        setLocalCart(selectedProduct);
                         addToCart();
                     }}
                 >
                     <View className="flex-row items-center justify-center gap-3">
                         <Entypo name="shopping-cart" size={18} color="white" />
-                        <Text className="text-text font-semibold">Add to cart</Text>
+                        {
+                            cart && cart.find((item) => item.product.id === selectedProduct.id) ?
+                                <Text className="text-text font-semibold">Item in Cart</Text>
+                                :
+                                <Text className="text-text font-semibold">Add to Cart</Text>
+                        }
                     </View>
                 </TouchableOpacity>
             </View>

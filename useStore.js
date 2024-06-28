@@ -24,4 +24,6 @@ export const useStore = create((set) => ({
 
     cart: [],
     setCart: (data) => set({ cart: data }),
+    localCart: [],
+    setLocalCart: (product) => set({ localCart: product }),
 }));
