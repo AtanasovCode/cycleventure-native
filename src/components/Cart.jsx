@@ -26,10 +26,11 @@ const Cart = () => {
 
     const renderCartItem = ({ item }) => (
         <View className="flex-row items-center justify-start gap-3 rounded-xl mb-6 bg-slate-800 p-2">
-            <View>
+            <View className="w-[35%] items-center justify-center bg-white px-2 rounded-lg">
                 <Image
                     source={{ uri: item.product.image }}
-                    className="w-24 h-12"
+                    className="w-[100%] aspect-square"
+                    resizeMode='contain'
 
                 />
             </View>
