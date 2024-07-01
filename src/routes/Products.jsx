@@ -122,6 +122,7 @@ const Products = ({ navigation }) => {
                     />
             }
             <Cart />
+            <Loading />
         </SafeAreaView>
     );
 }

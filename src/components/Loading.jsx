@@ -1,26 +1,51 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Image, Animated, Dimensions } from 'react-native';
+import { View, Image } from 'react-native';
+import Animated, {
+    withTiming,
+    Easing,
+    withRepeat,
+    withSpring,
+    useAnimatedStyle,
+} from 'react-native-reanimated';
 import { width, height } from '../Utils';
+import { useSharedValue } from 'react-native-reanimated';
 
 const Loading = () => {
     const loadingIcon = require('../assets/loading.png');
-    const spinValue = useRef(new Animated.Value(0)).current;
+
+    const spin = useSharedValue(0);
+
+    const spinAnimation = () => {
+        spin.value = withRepeat(
+            withTiming(360, {
+                duration: 2000,
+                easing: Easing.linear,
+            }),
+            -1
+        );
+    }
+
+    const springAnimation = () => {
+        spin.value = withRepeat(
+            withSpring(360, {
+                mass: 1,
+                damping: 10,
+                stiffness: 70,
+            }),
+            -1
+        )
+    }
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ rotate: `${spin.value}deg` }]
+        };
+    })
 
     useEffect(() => {
-        const spinAnimation = Animated.loop(
-            Animated.timing(spinValue, {
-                toValue: 1,
-                duration: 2000,
-                useNativeDriver: true,
-            })
-        );
-        spinAnimation.start();
-    }, [spinValue]);
+        springAnimation();
+    }, [])
 
-    const spin = spinValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg'],
-    });
 
     return (
         <View
@@ -29,7 +54,7 @@ const Loading = () => {
             <Animated.Image
                 source={loadingIcon}
                 className="w-32 h-32"
-                style={{ transform: [{ rotate: spin }] }}
+                style={[animatedStyle]}
             />
         </View>
     );
