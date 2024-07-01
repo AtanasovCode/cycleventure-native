@@ -4,8 +4,8 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    Dimensions,
     ScrollView,
+    Alert,
 } from "react-native";
 import { supabase } from "../../supabase";
 import { useStore } from "../../useStore";
@@ -64,7 +64,6 @@ const Product = ({ navigation }) => {
 
     async function getCart() {
         try {
-            setLoading(true);
 
             const { data, error, status } = await supabase
                 .from('carts')
@@ -90,7 +89,6 @@ const Product = ({ navigation }) => {
                 Alert.alert(error.message);
             }
         } finally {
-            setLoading(false);
         }
     }
 
@@ -151,24 +149,30 @@ const Product = ({ navigation }) => {
                 </Text>
                 <TouchableOpacity
                     style={{ width: width * 0.65 }}
-                    className="items-center justify-center bg-secondary p-2 mt-12 rounded-xl"
+                    className="items-center justify-center bg-primary p-2 mt-12 rounded-xl"
                     onPress={() => {
                         setLocalCart(selectedProduct);
                         addToCart();
                     }}
                 >
                     <View className="flex-row items-center justify-center gap-3">
-                        <Entypo name="shopping-cart" size={18} color="white" />
+                        {
+                            loading ?
+                                <View className="">
+                                    <Loading iconWidth={30} iconHeight={30} fullScreen={false} dark={true} />
+                                </View>
+                                :
+                                <Entypo name="shopping-cart" size={22} color="black" />
+                        }
                         {
                             cart && cart.find((item) => item.product.id === selectedProduct.id) ?
-                                <Text className="text-text font-semibold">Item in Cart</Text>
+                                <Text className="text-background font-bold">Item in Cart</Text>
                                 :
-                                <Text className="text-text font-semibold">Add to Cart</Text>
+                                <Text className="text-background font-bold">Add to Cart</Text>
                         }
                     </View>
                 </TouchableOpacity>
             </View>
-            {loading && <Loading />}
         </ScrollView>
     );
 }

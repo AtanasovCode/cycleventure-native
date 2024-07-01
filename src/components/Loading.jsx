@@ -10,8 +10,14 @@ import Animated, {
 import { width, height } from '../Utils';
 import { useSharedValue } from 'react-native-reanimated';
 
-const Loading = () => {
+const Loading = ({
+    iconWidth,
+    iconHeight,
+    fullScreen,
+    dark,
+}) => {
     const loadingIcon = require('../assets/loading.png');
+    const loadingIconDark = require('../assets/loading-dark.png');
 
     const spin = useSharedValue(0);
 
@@ -43,18 +49,22 @@ const Loading = () => {
     })
 
     useEffect(() => {
-        springAnimation();
+        spinAnimation();
     }, [])
 
 
     return (
         <View
-            className="flex-1 bg-background absolute top-0 left-0 right-0 bottom-0 items-center justify-center"
+            className={
+                fullScreen ? 
+                "flex-1 bg-background absolute top-0 left-0 right-0 bottom-0 items-center justify-center"
+                :
+                ""
+            }
         >
             <Animated.Image
-                source={loadingIcon}
-                className="w-32 h-32"
-                style={[animatedStyle]}
+                source={dark ? loadingIconDark : loadingIcon}
+                style={[animatedStyle, { width: iconWidth, height: iconHeight }]}
             />
         </View>
     );

@@ -113,7 +113,7 @@ const Products = ({ navigation }) => {
             <Text className="text-text text-center font-extrabold text-2xl mb-8">Products</Text>
             {
                 loading ?
-                    <Loading />
+                    <Loading iconWidth={86} iconHeight={86} fullScreen={true} />
                     :
                     <FlatList
                         data={products}
@@ -122,7 +122,6 @@ const Products = ({ navigation }) => {
                     />
             }
             <Cart />
-            <Loading />
         </SafeAreaView>
     );
 }
