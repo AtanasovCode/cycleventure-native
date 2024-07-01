@@ -14,7 +14,8 @@ import { useStore } from "../../useStore";
 import { Entypo } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import Animated from "react-native-reanimated";
+import Animated, { withSpring, withClamp, withDecay } from "react-native-reanimated";
+import { useSharedValue } from 'react-native-reanimated';
 import Loading from './Loading';
 
 const Cart = () => {
@@ -50,11 +51,28 @@ const Cart = () => {
         </View>
     );
 
+    const animatePosition = useSharedValue(width * .85);
+
+    const onOpenCart = () => {
+        animatePosition.value = withSpring(0);
+    }
+
+    const onCloseCart = () => {
+        animatePosition.value = width * .85;
+        setShowCart(false);
+    }
+
+    useEffect(() => {
+        showCart ? onOpenCart() : onCloseCart();
+    }, [showCart])
+
     return (
         <Modal
             animationType="none"
             visible={showCart}
-            onRequestClose={() => setShowCart(false)}
+            onRequestClose={() => {
+                onCloseCart();
+            }}
             transparent={true}
         >
             <View
@@ -63,7 +81,12 @@ const Cart = () => {
             >
                 <Animated.View
                     className="bg-background p-2"
-                    style={[{ width: width * 0.85, height: height }]}
+                    style={[
+                        {
+                            width: width * 0.85, height: height,
+                            transform: [{translateX: animatePosition}]
+                        }
+                    ]}
                 >
                     <View className="relative flex-row items-center justify-center gap-4 mt-4">
                         <TouchableOpacity
