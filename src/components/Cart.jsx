@@ -14,7 +14,7 @@ import { useStore } from "../../useStore";
 import { Entypo } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import Animated, { withSpring, withClamp, withDecay } from "react-native-reanimated";
+import Animated, { withTiming, Easing, isFinished, runOnJS } from "react-native-reanimated";
 import { useSharedValue } from 'react-native-reanimated';
 import Loading from './Loading';
 
@@ -51,16 +51,26 @@ const Cart = () => {
         </View>
     );
 
-    const animatePosition = useSharedValue(width * .85);
+    const translateX = useSharedValue(width * .85);
 
     const onOpenCart = () => {
-        animatePosition.value = withSpring(0);
+        translateX.value = withTiming(0, {
+            duration: 300,
+            easing: Easing.inOut(Easing.quad),
+        });
     }
 
     const onCloseCart = () => {
-        animatePosition.value = width * .85;
-        setShowCart(false);
-    }
+        translateX.value = withTiming(width * 0.85, {
+            duration: 200,
+            easing: Easing.inOut(Easing.quad),
+        }, (isFinished) => {
+            if (isFinished) {
+                runOnJS(setShowCart)(false);
+            }
+        });
+    };
+
 
     useEffect(() => {
         showCart ? onOpenCart() : onCloseCart();
@@ -84,7 +94,7 @@ const Cart = () => {
                     style={[
                         {
                             width: width * 0.85, height: height,
-                            transform: [{translateX: animatePosition}]
+                            transform: [{ translateX }]
                         }
                     ]}
                 >
@@ -92,7 +102,7 @@ const Cart = () => {
                         <TouchableOpacity
                             className="absolute top-0 left-0 right-0 bottom-0 items-start justify-center"
                             onPress={() => {
-                                setShowCart(false);
+                                onCloseCart(false);
                             }}
                         >
                             <EvilIcons name="close" size={32} color="white" />
