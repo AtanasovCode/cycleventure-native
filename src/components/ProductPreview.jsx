@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { formatMoney } from "../Utils";
 import { useStore } from "../../useStore";
-import { height, width } from "../Utils";
+import { height, width, getRating } from "../Utils";
 
 
 const ProductPreview = ({ item, navigation }) => {
@@ -22,9 +22,9 @@ const ProductPreview = ({ item, navigation }) => {
                 navigation.navigate("Product")
             }}
         >
-            <View 
+            <View
                 className="bg-slate-200 px-4 mb-4 rounded-xl items-center justify-center"
-                style={{height: height * .24}}
+                style={{ height: height * .24 }}
             >
                 <Image
                     source={{ uri: item.image }}
@@ -37,9 +37,19 @@ const ProductPreview = ({ item, navigation }) => {
                 <Text className="text-text text-center font-bold text-2xl mb-3">
                     {item.name}
                 </Text>
-                <Text className="text-text">
-                    {formatMoney(item.price)}
-                </Text>
+                <View className="flex-row items-center justify-center gap-4">
+                    <Text className="text-text font-bold text-lg">
+                        {formatMoney(item.price)}
+                    </Text>
+                    <View className="flex-row items-center justify-center gap-1">
+                        <Text>
+                            {getRating(item.rating, 15)}
+                        </Text>
+                        <Text className="text-text">
+                            ({item.rating_numbers})
+                        </Text>
+                    </View>
+                </View>
             </View>
         </TouchableOpacity>
     );

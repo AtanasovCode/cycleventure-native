@@ -7,13 +7,13 @@ const formatMoney = (number) => {
 }
 
 
-const getRating = (rating) => {
+const getRating = (rating, starSize) => {
     const stars = [];
 
     // If the rating is a whole number
     if (rating % 1 === 0) {
         for (let i = 0; i < rating; i++) {
-            stars.push(<FontAwesome key={i} name="star" size={18} color="white" />);
+            stars.push(<FontAwesome key={i} name="star" size={starSize} color="white" />);
         }
     } else {
         // If the rating is not a whole number, you can adjust the logic here

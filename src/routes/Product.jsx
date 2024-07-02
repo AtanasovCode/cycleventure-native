@@ -128,7 +128,7 @@ const Product = ({ navigation }) => {
                 </View>
                 <View className="flex-row items-center justify-between">
                     <Text className="text-slate-400 mr-6">Rating:</Text>
-                    <Text className="text-slate-400">{getRating(selectedProduct.rating)}</Text>
+                    <Text className="text-slate-400">{getRating(selectedProduct.rating, 16)}</Text>
                 </View>
             </View>
             <View className="items-center justify-center mt-16">
