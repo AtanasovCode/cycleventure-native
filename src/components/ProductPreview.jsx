@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { formatMoney } from "../Utils";
 import { useStore } from "../../useStore";
+import { height, width } from "../Utils";
 
 
 const ProductPreview = ({ item, navigation }) => {
@@ -21,20 +22,25 @@ const ProductPreview = ({ item, navigation }) => {
                 navigation.navigate("Product")
             }}
         >
-            <Image
-                source={{ uri: item.image }}
-                style={{ width: Dimensions.get('window').width * 0.5, height: Dimensions.get('window').height * 0.2 }}
-                className=""
-                resizeMode="contain"
-                onError={(error) => console.log('Error loading image:', error)}
-            />
-
-            <Text className="text-text text-center font-bold text-2xl mb-3">
-                {item.name}
-            </Text>
-            <Text className="text-text">
-                {formatMoney(item.price)}
-            </Text>
+            <View 
+                className="bg-slate-200 px-4 mb-4 rounded-xl items-center justify-center"
+                style={{height: height * .24}}
+            >
+                <Image
+                    source={{ uri: item.image }}
+                    className="w-[65%] aspect-square"
+                    resizeMode="contain"
+                    onError={(error) => console.log('Error loading image:', error)}
+                />
+            </View>
+            <View className="items-center justify-center">
+                <Text className="text-text text-center font-bold text-2xl mb-3">
+                    {item.name}
+                </Text>
+                <Text className="text-text">
+                    {formatMoney(item.price)}
+                </Text>
+            </View>
         </TouchableOpacity>
     );
 }
