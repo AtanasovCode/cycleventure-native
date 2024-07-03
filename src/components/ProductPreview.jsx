@@ -34,6 +34,9 @@ const ProductPreview = ({ item, navigation }) => {
                 />
             </View>
             <View className="items-center justify-center">
+                <Text className="text-slate-400 text-sm text-left mb-2">
+                    {item.sold}
+                </Text>
                 <Text className="text-text text-center font-bold text-2xl mb-3">
                     {item.name}
                 </Text>
