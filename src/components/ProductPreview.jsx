@@ -8,6 +8,7 @@ import {
 import { formatMoney } from "../Utils";
 import { useStore } from "../../useStore";
 import { height, width, getRating } from "../Utils";
+import { AntDesign } from '@expo/vector-icons';
 
 
 const ProductPreview = ({ item, navigation }) => {
@@ -16,14 +17,14 @@ const ProductPreview = ({ item, navigation }) => {
 
     return (
         <TouchableOpacity
-            className="mb-4 items-center justify-center bg-[#06151e] pb-6 rounded-2xl"
+            className="mb-4 items-center justify-center bg-background pb-6 rounded-2xl"
             onPress={() => {
                 selectProduct(item.id)
                 navigation.navigate("Product")
             }}
         >
             <View
-                className="bg-slate-200 px-4 mb-4 rounded-xl items-center justify-center"
+                className="px-4 mb-4 rounded-xl items-center justify-center"
                 style={{ height: height * .24 }}
             >
                 <Image
@@ -33,24 +34,25 @@ const ProductPreview = ({ item, navigation }) => {
                     onError={(error) => console.log('Error loading image:', error)}
                 />
             </View>
-            <View className="items-center justify-center">
-                <Text className="text-slate-400 text-sm text-left mb-2">
-                    {item.sold}
-                </Text>
-                <Text className="text-text text-center font-bold text-2xl mb-3">
+            <View className="items-start justify-center">
+                <Text className="text-text text-center font-bold text-2xl mb-1">
                     {item.name}
                 </Text>
-                <View className="flex-row items-center justify-center gap-4">
-                    <Text className="text-text font-bold text-lg">
+                <View className="flex-row items-center justify-center gap-2 mt-1">
+                    <Text>
+                        {getRating(item.rating, 15)}
+                    </Text>
+                    <Text className="text-slate-400 text-sm text-center">
+                        {item.sold} sold
+                    </Text>
+                </View>
+                <View className="flex-row items-start justify-center gap-2 mt-1">
+                    <Text className="text-text font-bold text-xl">
                         {formatMoney(item.price)}
                     </Text>
                     <View className="flex-row items-center justify-center gap-1">
-                        <Text>
-                            {getRating(item.rating, 15)}
-                        </Text>
-                        <Text className="text-text">
-                            ({item.rating_numbers})
-                        </Text>
+                        <Text className="text-slate-400 font-sm">In stock</Text>
+                        <AntDesign name="checkcircle" size={15} color="#8c8c8c" />
                     </View>
                 </View>
             </View>
