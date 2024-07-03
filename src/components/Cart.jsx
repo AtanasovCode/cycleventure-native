@@ -121,7 +121,9 @@ const Cart = () => {
                                     keyExtractor={(item) => item.id.toString()}
                                 />
                             ) : (
-                                <Text className="text-text font-bold text-xl">Cart is empty</Text>
+                                <View className="h-full items-center justify-center">
+                                    <Text className="text-slate-400 font-bold text-md">Cart is empty</Text>
+                                </View>
                             )
                         )}
                     </View>
