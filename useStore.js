@@ -16,6 +16,11 @@ export const useStore = create((set) => ({
 
     products: [],
     saveProducts: (products) => set({ products }),
+    filter: "all",
+    setFilter: (filter) => set({ filter }),
+    filteredProducts: [],
+    saveFilteredProducts: (products) => set({ filteredProducts }),
+
 
     selectedProduct: null,
     selectProduct: (id) => set((state) => ({

@@ -30,6 +30,8 @@ const Products = ({ navigation }) => {
 
     const products = useStore((state) => state.products);
     const saveProducts = useStore((state) => state.saveProducts);
+    const filteredProducts = useStore((state) => state.filteredProducts);
+    const saveFilteredProducts = useStore((state) => state.saveFilteredProducts);
 
     useEffect(() => {
         getProducts();
