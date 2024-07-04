@@ -14,6 +14,7 @@ import { useStore } from "../../useStore";
 import { Entypo } from '@expo/vector-icons';
 import Loading from "../components/Loading";
 import Cart from "../components/Cart";
+import ListHeader from "../components/ListHeader";
 
 import ProductPreview from "../components/ProductPreview";
 
@@ -100,7 +101,7 @@ const Products = ({ navigation }) => {
 
     return (
         <SafeAreaView className="flex-1 bg-background">
-            <View className="p-6 flex-row items-center justify-center mb-10">
+            <View className="p-6 flex-row items-center justify-center">
                 <Text className="font-black text-text text-3xl">cycleventure.</Text>
                 <TouchableOpacity
                     className="absolute right-6"
@@ -110,7 +111,6 @@ const Products = ({ navigation }) => {
                 </TouchableOpacity>
                 <View className="w-full bg-slate-700 h-1 absolute bottom-0"></View>
             </View>
-            <Text className="text-text text-center font-extrabold text-2xl mb-8">Products</Text>
             {
                 loading ?
                     <Loading iconWidth={86} iconHeight={86} fullScreen={true} />
@@ -118,7 +118,8 @@ const Products = ({ navigation }) => {
                     <FlatList
                         data={products}
                         renderItem={({ item }) => <ProductPreview item={item} navigation={navigation} />}
-                        keyExtractor={(item) => item.id.toString()} // Corrected keyExtractor
+                        keyExtractor={(item) => item.id.toString()}
+                        ListHeaderComponent={<ListHeader />}
                     />
             }
             <Cart />
