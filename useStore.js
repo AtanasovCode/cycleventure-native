@@ -16,10 +16,14 @@ export const useStore = create((set) => ({
 
     products: [],
     saveProducts: (products) => set({ products }),
-    filter: "all",
+
+    filter: "Position",
     setFilter: (filter) => set({ filter }),
+    showFilter: false,
+    toggleShowFilter: (showFilter) => set({ showFilter }),
+    filters: ["Position", "Best Selling", "Price (Low to High)", "Price (High to Low)"],
     filteredProducts: [],
-    saveFilteredProducts: (products) => set({ filteredProducts }),
+    saveFilteredProducts: (filteredProducts) => set({ filteredProducts }),
 
 
     selectedProduct: null,

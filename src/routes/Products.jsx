@@ -15,6 +15,7 @@ import { Entypo } from '@expo/vector-icons';
 import Loading from "../components/Loading";
 import Cart from "../components/Cart";
 import ListHeader from "../components/ListHeader";
+import FilterModal from "../components/FilterModal";
 
 import ProductPreview from "../components/ProductPreview";
 
@@ -32,6 +33,7 @@ const Products = ({ navigation }) => {
     const saveProducts = useStore((state) => state.saveProducts);
     const filteredProducts = useStore((state) => state.filteredProducts);
     const saveFilteredProducts = useStore((state) => state.saveFilteredProducts);
+    const showFilter = useStore((state) => state.showFilter);
 
     useEffect(() => {
         getProducts();
@@ -125,6 +127,7 @@ const Products = ({ navigation }) => {
                     />
             }
             <Cart />
+            {showFilter && <FilterModal />}
         </SafeAreaView>
     );
 }

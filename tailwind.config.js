@@ -9,13 +9,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'text': 'hsl(328, 86%, 95%)',
-        'background': '#042222',
-        'primary': 'hsl(329, 83%, 72%)',
-        'secondary': 'hsl(169, 83%, 30%)',
-        'accent': 'hsl(235, 82%, 53%)',
+        'text': '#f0f4f4',
+        'background': '#021d1c',
+        'primary': '#78f4ec',
+        'secondary': '#4c4b64',
+        'accent': '#2957ee',
       },
-
     },
   },
   plugins: [],
