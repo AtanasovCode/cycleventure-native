@@ -149,11 +149,14 @@ const Product = ({ navigation }) => {
                 </Text>
                 <TouchableOpacity
                     style={{ width: width * 0.65 }}
-                    className="items-center justify-center bg-primary p-2 mt-12 rounded-xl"
+                    className={`items-center justify-center p-2 mt-12 rounded-xl
+                        ${ cart && cart.find((item) => item.product.id === selectedProduct.id) ? 'bg-[#1f889f]' : 'bg-accent'}
+                        `}
                     onPress={() => {
                         setLocalCart(selectedProduct);
                         addToCart();
                     }}
+                    disabled={ cart && cart.find((item) => item.product.id === selectedProduct.id) ? true : false}
                 >
                     <View className="flex-row items-center justify-center gap-3">
                         {
