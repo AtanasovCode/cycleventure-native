@@ -17,14 +17,14 @@ const ProductPreview = ({ item, navigation }) => {
 
     return (
         <TouchableOpacity
-            className="mb-4 items-center justify-center bg-background pb-6 rounded-2xl"
+            className="mb-8 items-center justify-center bg-background py-4 rounded-2xl border border-solid border-slate-700"
             onPress={() => {
                 selectProduct(item.id)
                 navigation.navigate("Product")
             }}
         >
             <View
-                className="px-4 mb-4 rounded-xl items-center justify-center"
+                className="px-4 mb-4 rounded-xl items-center justify-center bg-gray-200"
                 style={{ height: height * .24 }}
             >
                 <Image
@@ -52,7 +52,7 @@ const ProductPreview = ({ item, navigation }) => {
                     </Text>
                     <View className="flex-row items-center justify-center gap-1">
                         <Text className="text-slate-400 font-sm">In stock</Text>
-                        <AntDesign name="checkcircle" size={15} color="#8c8c8c" />
+                        <AntDesign name="checkcircle" size={15} color="#1b1919" />
                     </View>
                 </View>
             </View>

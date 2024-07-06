@@ -12,12 +12,12 @@ const ListHeader = () => {
     const toggleShowFilter = useStore((state) => state.toggleShowFilter);
 
     return (
-        <View className="items-center justify-center mb-2 pt-6">
+        <View className="items-center justify-center my-8">
             <Text className="text-text font-bold text-xl">
                 Products
             </Text>
             <TouchableOpacity 
-                className="pt-6 pr-6 absolute top-0 left-0 right-0 bottom-0 items-end justify-center"
+                className="pr-8 absolute top-0 left-0 right-0 bottom-0 items-end justify-center"
                 onPress={() => {
                     toggleShowFilter(!showFilter)
                 }}
