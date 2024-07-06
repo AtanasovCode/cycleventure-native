@@ -31,6 +31,7 @@ const Products = ({ navigation }) => {
 
     const products = useStore((state) => state.products);
     const saveProducts = useStore((state) => state.saveProducts);
+    const filter = useStore((state) => state.filter);
     const filteredProducts = useStore((state) => state.filteredProducts);
     const saveFilteredProducts = useStore((state) => state.saveFilteredProducts);
     const showFilter = useStore((state) => state.showFilter);
@@ -54,6 +55,7 @@ const Products = ({ navigation }) => {
 
             if (data) {
                 saveProducts(data);
+                filterProducts(data, filter);
             }
 
         } catch (error) {
@@ -65,11 +67,58 @@ const Products = ({ navigation }) => {
         }
     }
 
+    async function filterProducts(products, filter) {
+        try {
+            setLoading(true);
+
+            let filteredData = [];
+            switch (filter) {
+                case 'Position':
+                    filteredData = [...products]; // Copy the array to avoid direct mutation
+                    break;
+                case 'Best Selling':
+                    filteredData = [...products].sort((a, b) => b.sold - a.sold);
+                    break;
+                case 'Price (Low to High)':
+                    filteredData = [...products].sort((a, b) => a.price - b.price);
+                    break;
+                case 'Price (High to Low)':
+                    filteredData = [...products].sort((a, b) => b.price - a.price);
+                    break;
+                default:
+                    filteredData = [...products];
+                    break;
+            }
+
+            saveFilteredProducts(filteredData);
+
+        } catch (error) {
+            console.log(`Encountered error: ${error}`);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
     useEffect(() => {
         if (products.length > 0) {
             getCart();
         }
     }, [products, localCart]);
+
+    useEffect(() => {
+        if (products.length > 0) {
+            filterProducts(products, filter);
+        }
+    }, [filter]);
+
+    useEffect(() => {
+        const product = filteredProducts.find((item) => item.name === "Diverge STR Comp");
+        if (product) {
+            console.log(product);
+        }
+    }, [filteredProducts]);
+
 
     async function getCart() {
         try {
@@ -91,7 +140,6 @@ const Products = ({ navigation }) => {
                 });
                 setCart(cartItems);
 
-                console.log('Cart Items:', JSON.stringify(cartItems, null, 2));
             }
 
         } catch (error) {
@@ -120,7 +168,7 @@ const Products = ({ navigation }) => {
                     <Loading iconWidth={86} iconHeight={86} fullScreen={true} />
                     :
                     <FlatList
-                        data={products}
+                        data={filteredProducts}
                         renderItem={({ item }) => <ProductPreview item={item} navigation={navigation} />}
                         keyExtractor={(item) => item.id.toString()}
                         ListHeaderComponent={<ListHeader />}
