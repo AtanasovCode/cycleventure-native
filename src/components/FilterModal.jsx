@@ -15,6 +15,8 @@ import Animated, {
     useAnimatedStyle,
     runOnJS,
 } from "react-native-reanimated";
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const FilterModal = () => {
@@ -39,7 +41,7 @@ const FilterModal = () => {
             duration: 150,
             easing: Easing.inOut(Easing.quad),
         }, (isFinished) => {
-            if(isFinished) {
+            if (isFinished) {
                 runOnJS(toggleShowFilter)(false)
             }
         })
@@ -66,7 +68,7 @@ const FilterModal = () => {
                 style={{ backgroundColor: showFilter ? "rgba(0, 0, 0, .7)" : "rgba(0, 0, 0, 0)" }}
             >
                 <Animated.View
-                    className="bg-background p-4 rounded-xl"
+                    className="bg-gray-800 p-4 rounded-xl"
                     style={[animatedStyle, { width: width * 0.66 }]}
                 >
                     <View className="flex-row items-center justify-center gap-2 mb-4">
@@ -80,7 +82,7 @@ const FilterModal = () => {
                                     <TouchableOpacity
                                         key={item}
                                         className={`
-                                            w-full items-center justify-center mb-4 p-2 rounded-xl
+                                            w-full flex-row items-center justify-start mb-4 p-1 rounded-xl gap-2
                                             ${filter === item ? 'bg-secondary' : 'bg-transparent'}
                                         `}
                                         onPress={() => {
@@ -88,6 +90,10 @@ const FilterModal = () => {
                                             toggleShowFilter(false);
                                         }}
                                     >
+                                        {item === "Position" && <MaterialIcons name="numbers" size={20} color="white" />}
+                                        {item === "Best Selling" && <FontAwesome name="ticket" size={20} color="white" />}
+                                        {item === "Price (High to Low)" && <Ionicons name="pricetag-sharp" size={20} color="white" />}
+                                        {item === "Price (Low to High)" && <Ionicons name="pricetags-sharp" size={20} color="white" />}
                                         <Text className="text-text font-semibold text-md">{item}</Text>
                                     </TouchableOpacity>
                                 );

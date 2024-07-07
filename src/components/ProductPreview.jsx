@@ -17,19 +17,19 @@ const ProductPreview = ({ item, navigation }) => {
 
     return (
         <TouchableOpacity
-            className="mb-8 items-center justify-center bg-background py-4 rounded-2xl border border-solid border-slate-700"
+            className="mb-4 items-center justify-center bg-[#1e1e1e] py-4 rounded-2xl"
             onPress={() => {
                 selectProduct(item.id)
                 navigation.navigate("Product")
             }}
         >
             <View
-                className="px-4 mb-4 rounded-xl items-center justify-center bg-gray-200"
+                className="mb-4 rounded-xl items-center justify-center"
                 style={{ height: height * .24 }}
             >
                 <Image
                     source={{ uri: item.image }}
-                    className="w-[65%] aspect-square"
+                    className="w-[70%] aspect-square"
                     resizeMode="contain"
                     onError={(error) => console.log('Error loading image:', error)}
                 />
