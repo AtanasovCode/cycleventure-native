@@ -63,9 +63,12 @@ const FilterModal = () => {
             onRequestClose={() => toggleShowFilter(false)}
             transparent={true}
         >
-            <View
+            <TouchableOpacity
                 className="absolute top-0 left-0 right-0 bottom-0 items-center justify-center"
                 style={{ backgroundColor: showFilter ? "rgba(0, 0, 0, .7)" : "rgba(0, 0, 0, 0)" }}
+                onPress={() => {
+                    toggleShowFilter(false);
+                }}
             >
                 <Animated.View
                     className="bg-gray-800 p-4 rounded-xl"
@@ -101,7 +104,7 @@ const FilterModal = () => {
                         }
                     </View>
                 </Animated.View>
-            </View>
+            </TouchableOpacity>
         </Modal>
     );
 }
