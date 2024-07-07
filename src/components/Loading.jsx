@@ -14,10 +14,12 @@ const Loading = ({
     iconWidth,
     iconHeight,
     fullScreen,
-    dark,
+    theme,
 }) => {
+
     const loadingIcon = require('../assets/loading.png');
     const loadingIconDark = require('../assets/loading-dark.png');
+    const loadingIconLight = require('../assets/loading-light.png');
 
     const spin = useSharedValue(0);
 
@@ -52,18 +54,27 @@ const Loading = ({
         spinAnimation();
     }, [])
 
+    const getIconSource = () => {
+        if (theme === 'light') {
+            return loadingIconLight;
+        } else if (theme === 'dark') {
+            return loadingIconDark;
+        } else {
+            return loadingIcon;
+        }
+    };
 
     return (
         <View
             className={
-                fullScreen ? 
-                "flex-1 bg-background absolute top-0 left-0 right-0 bottom-0 items-center justify-center"
-                :
-                ""
+                fullScreen ?
+                    "flex-1 bg-background absolute top-0 left-0 right-0 bottom-0 items-center justify-center"
+                    :
+                    ""
             }
         >
             <Animated.Image
-                source={dark ? loadingIconDark : loadingIcon}
+                source={getIconSource()}
                 style={[animatedStyle, { width: iconWidth, height: iconHeight }]}
             />
         </View>

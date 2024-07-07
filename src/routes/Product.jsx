@@ -15,6 +15,7 @@ import { Entypo } from '@expo/vector-icons';
 import { getRating, width, height, formatMoney } from "../Utils";
 import { Ionicons } from '@expo/vector-icons';
 import Loading from "../components/Loading";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Product = ({ navigation }) => {
 
@@ -23,8 +24,6 @@ const Product = ({ navigation }) => {
     const selectedProduct = useStore((state) => state.selectedProduct);
     const loading = useStore((state) => state.loading);
     const setLoading = useStore((state) => state.setLoading);
-    const setLocalCart = useStore((state) => state.setLocalCart);
-    const localCart = useStore((state) => state.localCart);
     const setCart = useStore((state) => state.setCart);
     const cart = useStore((state) => state.cart);
 
@@ -35,36 +34,40 @@ const Product = ({ navigation }) => {
             setLoading(true);
             if (!session?.user) throw new Error('No user on the session!');
 
-            const cart = {
+            const cartItem = {
                 user_id: session?.user.id,
                 product_id: selectedProduct.id,
                 quantity: 1,
-            }
+            };
 
-            const { error } = await supabase.from('carts').insert(cart);
+            const { error } = await supabase.from('carts').insert(cartItem);
 
             if (error) {
                 throw error;
             }
+
+            // Update local cart state
+            const product = products.find(item => item.id === selectedProduct.id);
+            setCart([...cart, { ...cartItem, product }]);
+
         } catch (error) {
             if (error instanceof Error) {
                 Alert.alert(error.message);
             }
         } finally {
             setLoading(false);
-            console.log("Saved to cart")
         }
-    }
+    };
+
 
     useEffect(() => {
         if (products.length > 0) {
             getCart();
         }
-    }, [products, localCart]);
+    }, [products, cart]);
 
     async function getCart() {
         try {
-
             const { data, error, status } = await supabase
                 .from('carts')
                 .select('*')
@@ -80,8 +83,6 @@ const Product = ({ navigation }) => {
                     return { ...cartItem, product };
                 });
                 setCart(cartItems);
-
-                console.log('Cart Items:', JSON.stringify(cartItems, null, 2));
             }
 
         } catch (error) {
@@ -150,19 +151,23 @@ const Product = ({ navigation }) => {
                 <TouchableOpacity
                     style={{ width: width * 0.65 }}
                     className={`items-center justify-center p-2 mt-12 rounded-xl
-                        ${ cart && cart.find((item) => item.product.id === selectedProduct.id) ? 'bg-[#1f889f]' : 'bg-accent'}
+                        ${cart && cart.find((item) => item.product.id === selectedProduct.id) ? 'bg-[#1f889f]' : 'bg-accent'}
                         `}
                     onPress={() => {
-                        setLocalCart(selectedProduct);
                         addToCart();
                     }}
-                    disabled={ cart && cart.find((item) => item.product.id === selectedProduct.id) ? true : false}
+                    disabled={loading || cart && cart.find((item) => item.product.id === selectedProduct.id) ? true : false}
                 >
                     <View className="flex-row items-center justify-center gap-3">
                         {
                             loading ?
                                 <View className="">
-                                    <Loading iconWidth={30} iconHeight={30} fullScreen={false} dark={true} />
+                                    <Loading 
+                                        iconWidth={30} 
+                                        iconHeight={30} 
+                                        fullScreen={false} 
+                                        theme="dark"
+                                    />
                                 </View>
                                 :
                                 <Entypo name="shopping-cart" size={22} color="black" />

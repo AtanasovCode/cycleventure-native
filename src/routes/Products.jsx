@@ -26,7 +26,6 @@ const Products = ({ navigation }) => {
     const setLoading = useStore((state) => state.setLoading);
 
     const setShowCart = useStore((state) => state.setShowCart);
-    const localCart = useStore((state) => state.localCart);
     const setCart = useStore((state) => state.setCart);
 
     const products = useStore((state) => state.products);
@@ -104,20 +103,13 @@ const Products = ({ navigation }) => {
         if (products.length > 0) {
             getCart();
         }
-    }, [products, localCart]);
+    }, [products]);
 
     useEffect(() => {
         if (products.length > 0) {
             filterProducts(products, filter);
         }
     }, [filter]);
-
-    useEffect(() => {
-        const product = filteredProducts.find((item) => item.name === "Diverge STR Comp");
-        if (product) {
-            console.log(product);
-        }
-    }, [filteredProducts]);
 
 
     async function getCart() {
