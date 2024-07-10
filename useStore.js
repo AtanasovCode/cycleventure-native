@@ -32,7 +32,7 @@ export const useStore = create((set) => ({
     })),
 
     cart: [],
-    setCart: (data) => set({ cart: data }),
+    setCart: (data) => set({ cart: Array.isArray(data) ? data : [] }),
     localCart: [],
     setLocalCart: (product) => set({ localCart: product }),
 }));
