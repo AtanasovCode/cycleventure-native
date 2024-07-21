@@ -11,12 +11,12 @@ import { formatMoney } from "../Utils";
 import { useStore } from "../../useStore";
 
 
-const CartItem = ({ item, deleteItem, key }) => {
+const CartItem = ({ item, deleteItem }) => {
 
     const loading = useStore((state) => state.loading);
 
     return (
-        <View key={key} className="flex-row items-center justify-start gap-3 rounded-xl mb-6 bg-slate-800 p-2">
+        <View className="flex-row items-center justify-start gap-3 rounded-xl mb-6 bg-slate-800 p-2">
             <View className="w-[35%] items-center justify-center bg-white px-2 rounded-lg relative">
                 <Image
                     source={{ uri: item.product.image }}
