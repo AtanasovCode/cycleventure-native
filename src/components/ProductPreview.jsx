@@ -52,7 +52,7 @@ const ProductPreview = ({ item, navigation }) => {
                     </Text>
                     <View className="flex-row items-center justify-center gap-1">
                         <Text className="text-slate-400 font-sm">In stock</Text>
-                        <AntDesign name="checkcircle" size={15} color="#1b1919" />
+                        <AntDesign name="checkcircle" size={13} color="#37d837" />
                     </View>
                 </View>
             </View>
