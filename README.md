@@ -6,19 +6,11 @@
 
 ### Screens
 
-#### Introduction
-![](./src/assets/screenshots/home.png)
-
-#### Authentication
-
-####All Products Preview
-![](./src/assets/screenshots/products.png)
-
-####Product Overview
-![](./src/assets/screenshots/preview.png)
-
-#### Cart
-![](./src/assets/screenshots/cart.png)
+- #### Introduction
+- #### Authentication
+- #### All Products Preview
+- #### Product Overview
+- #### Cart
 
 ### Features
 
