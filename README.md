@@ -6,11 +6,19 @@
 
 ### Screens
 
-- Introduction
-- Authentication
-- All Products Preview
-- Product Overview
-- Cart
+#### Introduction
+![](./src/assets/screenshots/home.png)
+
+#### Authentication
+
+####All Products Preview
+![](./src/assets/screenshots/products.png)
+
+####Product Overview
+![](./src/assets/screenshots/preview.png)
+
+#### Cart
+![](./src/assets/screenshots/cart.png)
 
 ### Features
 
@@ -25,5 +33,8 @@
 ### Built with:
 
 - React Native
+- Expo
+- React Navigation - for navigatin between screens
 - Zustand - for state management
 - Supabase - for database and authentication
+- TailwindCSS - for styling
